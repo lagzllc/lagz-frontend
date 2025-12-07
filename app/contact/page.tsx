@@ -1,27 +1,17 @@
-import Link from "next/link";
-
-export default function ContactPage() {
+export default function Contact() {
   return (
-    <div className="max-w-xl mx-auto mt-10 bg-white shadow p-8 rounded-lg">
+    <div className="max-w-xl mx-auto text-center mt-16">
+      <h1 className="text-4xl font-bold text-blue-600">Contact Us</h1>
 
-      <h1 className="text-4xl font-bold text-blue-700 mb-6 text-center">
-        Contact Us
-      </h1>
-
-      <p className="text-lg mb-4">
-        Phone: <strong>719-510-6453</strong>
+      <p className="mt-4 text-lg text-gray-700">
+        Need service? Reach out anytime.
       </p>
 
-      <p className="text-lg mb-4">
-        Email: <strong>service@lagzautotechmobile.com</strong>
-      </p>
-
-      <Link
-        href="https://wa.me/17195106453"
-        className="block mt-6 text-center bg-green-500 text-white py-3 rounded-lg text-xl"
-      >
-        WhatsApp Us
-      </Link>
+      <div className="mt-8 text-left space-y-4">
+        <p><strong>Phone:</strong> <a href="tel:7195106453">719-510-6453</a></p>
+        <p><strong>Email:</strong> service@lagzautotechmobile.com</p>
+        <p><strong>WhatsApp:</strong> <a href="https://wa.me/17195106453">Chat Now</a></p>
+      </div>
     </div>
   );
 }

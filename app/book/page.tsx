@@ -2,58 +2,64 @@
 
 import { useState } from "react";
 
-export default function BookingPage() {
-  const [form, setForm] = useState({ name: "", phone: "", service: "", description: "" });
-
-const submit = async () => {
-  const response = await fetch("https://lagz-backend-1.onrender.com/booking/create", {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify(form),
+export default function BookPage() {
+  const [form, setForm] = useState({
+    name: "",
+    phone: "",
+    service: "",
+    date: "",
   });
 
-  if (response.ok) {
-    alert("Booking submitted! A technician will contact you shortly.");
-  } else {
-    alert("Error submitting booking.");
-  }
-};
+  const handleSubmit = (e: any) => {
+    e.preventDefault();
+    alert("Booking Submitted! A technician will contact you.");
+    console.log(form);
+  };
 
   return (
-    <div className="max-w-xl mx-auto mt-10 bg-white p-8 rounded-lg shadow">
+    <div className="max-w-lg mx-auto mt-20 bg-white p-8 rounded-lg shadow-md">
+      <h1 className="text-3xl font-bold text-blue-600 text-center mb-6">
+        Book a Service
+      </h1>
 
-      <h1 className="text-3xl font-bold text-blue-700 mb-6 text-center">Book a Service</h1>
+      <form onSubmit={handleSubmit} className="space-y-4">
 
-      <input
-        className="w-full p-3 border rounded mb-4"
-        placeholder="Your Name"
-        onChange={(e) => setForm({ ...form, name: e.target.value })}
-      />
+        <input
+          className="w-full p-3 border rounded"
+          placeholder="Full Name"
+          onChange={(e) => setForm({ ...form, name: e.target.value })}
+        />
 
-      <input
-        className="w-full p-3 border rounded mb-4"
-        placeholder="Phone Number"
-        onChange={(e) => setForm({ ...form, phone: e.target.value })}
-      />
+        <input
+          className="w-full p-3 border rounded"
+          placeholder="Phone Number"
+          onChange={(e) => setForm({ ...form, phone: e.target.value })}
+        />
 
-      <input
-        className="w-full p-3 border rounded mb-4"
-        placeholder="Service Needed"
-        onChange={(e) => setForm({ ...form, service: e.target.value })}
-      />
+        <select
+          className="w-full p-3 border rounded"
+          onChange={(e) => setForm({ ...form, service: e.target.value })}
+        >
+          <option>Select Service</option>
+          <option>Mobile Diagnostics</option>
+          <option>Brake Repair</option>
+          <option>Battery Replacement</option>
+          <option>Emergency Roadside</option>
+        </select>
 
-      <textarea
-        className="w-full p-3 border rounded mb-4"
-        placeholder="Describe the issue"
-        onChange={(e) => setForm({ ...form, description: e.target.value })}
-      />
+        <input
+          type="date"
+          className="w-full p-3 border rounded"
+          onChange={(e) => setForm({ ...form, date: e.target.value })}
+        />
 
-      <button
-        className="w-full bg-blue-600 text-white py-3 rounded-lg hover:bg-blue-700"
-        onClick={submit}
-      >
-        Submit Request
-      </button>
+        <button
+          type="submit"
+          className="w-full bg-blue-600 text-white py-3 rounded-lg"
+        >
+          Submit Booking
+        </button>
+      </form>
     </div>
   );
 }
