@@ -1,60 +1,63 @@
 "use client";
 
 import { useState } from "react";
-import { API } from "@/lib/api";
-import DashboardLayout from "@/components/layout/DashboardLayout";
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
 
 export default function CreateBooking() {
-  const [serviceType, setServiceType] = useState("");
-  const [date, setDate] = useState("");
-  const [notes, setNotes] = useState("");
+  const [form, setForm] = useState({
+    customerName: "",
+    customerPhone: "",
+    service: "",
+    date: "",
+  });
 
-  async function submit() {
-    const token = localStorage.getItem("token");
+  const [message, setMessage] = useState("");
 
-    const res = await fetch(`${API}/booking`, {
+  async function submitForm(e: any) {
+    e.preventDefault();
+    const res = await fetch("/api/book", {
       method: "POST",
-      headers: {
-        Authorization: `Bearer ${token}`,
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({ serviceType, date, notes }),
+      body: JSON.stringify(form),
     });
 
-    const data = await res.json();
-    if (data.id) {
-      alert("Booking created!");
-      window.location.href = "/customer/bookings";
-    } else {
-      alert("Error creating booking");
-    }
+    if (res.ok) setMessage("Booking created successfully!");
+    else setMessage("Error submitting booking.");
   }
 
   return (
-    <DashboardLayout>
-      <h1 className="text-2xl font-bold mb-4">Create Booking</h1>
+    <div className="max-w-xl mx-auto py-16 px-6">
+      <h1 className="text-3xl font-bold mb-6">Book a Service</h1>
 
-      <div className="max-w-md space-y-4">
-        <Input
-          placeholder="Service Type"
-          onChange={(e) => setServiceType(e.target.value)}
+      {message && <p className="mb-4 text-green-600">{message}</p>}
+
+      <form onSubmit={submitForm} className="flex flex-col gap-4">
+        <input
+          className="border p-3 rounded"
+          placeholder="Your Name"
+          onChange={(e) => setForm({ ...form, customerName: e.target.value })}
         />
 
-        <Input
+        <input
+          className="border p-3 rounded"
+          placeholder="Phone Number"
+          onChange={(e) => setForm({ ...form, customerPhone: e.target.value })}
+        />
+
+        <input
+          className="border p-3 rounded"
+          placeholder="Service Needed"
+          onChange={(e) => setForm({ ...form, service: e.target.value })}
+        />
+
+        <input
           type="date"
-          onChange={(e) => setDate(e.target.value)}
+          className="border p-3 rounded"
+          onChange={(e) => setForm({ ...form, date: e.target.value })}
         />
 
-        <textarea
-          className="border p-2 w-full rounded"
-          placeholder="Notes"
-          onChange={(e) => setNotes(e.target.value)}
-        />
-
-        <Button onClick={submit}>Submit Booking</Button>
-      </div>
-    </DashboardLayout>
+        <button className="bg-blue-600 text-white p-3 rounded">
+          Submit Booking
+        </button>
+      </form>
+    </div>
   );
 }

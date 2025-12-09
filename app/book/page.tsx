@@ -10,11 +10,21 @@ export default function BookPage() {
     date: "",
   });
 
-  const handleSubmit = (e: any) => {
-    e.preventDefault();
-    alert("Booking Submitted! A technician will contact you.");
-    console.log(form);
-  };
+const handleSubmit = async (e: any) => {
+  e.preventDefault();
+
+  const res = await fetch("/api/bookings", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(form),
+  });
+
+  if (res.ok) {
+    alert("Booking saved! A technician will contact you.");
+  } else {
+    alert("Error saving booking.");
+  }
+};
 
   return (
     <div className="max-w-lg mx-auto mt-20 bg-white p-8 rounded-lg shadow-md">
@@ -44,7 +54,8 @@ export default function BookPage() {
           <option>Mobile Diagnostics</option>
           <option>Brake Repair</option>
           <option>Battery Replacement</option>
-          <option>Emergency Roadside</option>
+         <option>suspension reapir</option>
+ <option>Emergency Roadside</option>
         </select>
 
         <input

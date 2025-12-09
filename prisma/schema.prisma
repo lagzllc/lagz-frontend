@@ -1,0 +1,26 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("POSTGRES_URL")
+}
+
+model Booking {
+  id           String   @id @default(uuid())
+  customerName String
+  customerPhone String
+  service      String
+  date         String
+  status       String   @default("Pending")
+  technician   Technician? @relation(fields: [technicianId], references: [id])
+  technicianId String?
+}
+
+model Technician {
+  id        String   @id @default(uuid())
+  name      String
+  phone     String
+  bookings  Booking[]
+}

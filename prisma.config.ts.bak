@@ -1,0 +1,11 @@
+import { defineConfig } from "@prisma/config";
+import { postgres } from "@prisma/adapter-postgresql";
+
+export default defineConfig({
+  schema: "./prisma/schema.prisma",
+
+  // your real database connection
+  adapter: postgres(
+    "postgresql://agz_enterprise_db_user:ulJqVjrMxngRFwNeSPWNdn4MZvItu8xK@dpg-d4qbjdbe5dus73ektcg0-a.oregon-postgres.render.com/agz_enterprise_db"
+  ),
+});
